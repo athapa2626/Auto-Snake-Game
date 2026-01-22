@@ -9,8 +9,6 @@
 #include <chrono>
 #include <thread>
 
-using namespace std;
-
 // GLOBAL VARIABLES
 
 const int height = 10;
@@ -64,7 +62,7 @@ bool IsBlocked(int nx, int ny) {
 // A* PATHFINDING 
 
 snakes_direction FindPathAStar() {
-    priority_queue<Node*, vector<Node*>, NodeCompare> open;
+    std::priority_queue<Node*, std::vector<Node*>, NodeCompare> open;
     bool closed[height][width] = { false };
 
     Node* start = new Node{ head_x, head_y, 0, Heuristic(head_x, head_y, fruitCordX, fruitCordY), nullptr };
@@ -142,40 +140,40 @@ void clearScreen() {
     #endif
 }
 
-void GameRender(const string& playerName) {
+void GameRender(const std::string& playerName) {
     clearScreen();
 
     for (int i = 0; i < width + 2; i++)
-        cout << "-";
-    cout << endl;
+        std::cout << "-";
+    std::cout << std::endl;
 
     for (int i = 0; i < height; i++) {
         for (int j = 0; j <= width; j++) {
             if (j == 0 || j == width)
-                cout << "|";
+                std::cout << "|";
             else if (i == head_y && j == head_x)
-                cout << "O";
+                std::cout << "O";
             else if (i == fruitCordY && j == fruitCordX)
-                cout << "#";
+                std::cout << "#";
             else {
                 bool printTail = false;
                 for (int k = 0; k < snake_tail_len; k++) {
                     if (snakeTailX[k] == j && snakeTailY[k] == i) {
-                        cout << "o";
+                        std::cout << "o";
                         printTail = true;
                         break;
                     }
                 }
                 if (!printTail)
-                    cout << " ";
+                    std::cout << " ";
             }
         }
-        cout << endl;
+        std::cout << std::endl;
     }
 
     for (int i = 0; i < width + 2; i++)
-        cout << "-";
-    cout << endl;
+        std::cout << "-";
+    std::cout << std::endl;
 
     std::cout << playerName << "'s Score: " << playerScore << std::endl;
     std::cout << "Mode: " << (autoPlay ? "AI (AutoPlay)" : "Manual") << " | Press 'p' to toggle" << std::endl;
@@ -273,9 +271,9 @@ void UserInput() {
 int main() {
     srand(static_cast<unsigned int>(time(0)));
 
-    string playerName;
-    cout << "Enter your name: ";
-    cin >> playerName;
+    std::string playerName;
+    std::cout << "Enter your name: ";
+    std::cin >> playerName;
 
     std::cout << "\nChoose mode:\n";
     std::cout << "1. Manual Control\n";
@@ -299,8 +297,8 @@ int main() {
     }
 
     clearScreen();
-    cout << "Game Over!\n";
-    cout << playerName << "'s Final Score: " << playerScore << endl;
+    std::cout << "Game Over!\n";
+    std::cout << playerName << "'s Final Score: " << playerScore << std::endl;
 
     return 0;
 }
